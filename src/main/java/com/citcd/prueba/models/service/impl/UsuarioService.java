@@ -32,6 +32,9 @@ public class UsuarioService implements IUsuarioService{
 	@Override
 	@Transactional(readOnly = false)
 	public Usuario save(Usuario usuario) {
+		
+		validarUsuario(usuario);
+		
 		return usuarioDao.save(usuario);
 	}
 
@@ -39,6 +42,22 @@ public class UsuarioService implements IUsuarioService{
 	@Transactional(readOnly = false)
 	public void deleteById(Long id) {
 		usuarioDao.deleteById(id);
+		
+	}
+	
+
+	@Override
+	public Usuario findByCodigo(String codigo) {
+		return usuarioDao.findByCodigo(codigo);
+	}
+
+	public void validarUsuario(Usuario usuario) {
+		
+		Usuario usuarioOld = findByCodigo(usuario.getCodigo());
+		
+		if(usuarioOld != null && usuarioOld.getId() != usuario.getId()) {
+			throw new RuntimeException("Ya existe un usuario con codigo " + usuario.getCodigo());
+		}
 		
 	}
 

@@ -13,4 +13,6 @@ public interface IUsuarioService {
 	
 	public void deleteById(Long id);
 	
+	public Usuario findByCodigo(String codigo);
+	
 }
