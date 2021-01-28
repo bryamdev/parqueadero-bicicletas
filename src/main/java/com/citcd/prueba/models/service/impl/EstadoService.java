@@ -20,14 +20,12 @@ public class EstadoService implements IEstadoService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Estado> findAll() {
-		// TODO Auto-generated method stub
 		return (List<Estado>) estadoDao.findAll();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Estado findByID(Long id) {
-		// TODO Auto-generated method stub
 		return estadoDao.findById(id).orElse(null);
 	}
 

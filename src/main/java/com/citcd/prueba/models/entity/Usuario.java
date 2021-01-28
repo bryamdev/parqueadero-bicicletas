@@ -6,10 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.validation.constraints.NotEmpty;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
@@ -20,14 +22,21 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotEmpty
 	private String codigo;
 	
+	@NotEmpty
 	private String nombre;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", timezone = "America/Bogota")
 	private Date creadoEn;
 
+	
+	@PrePersist
+	private void PrePersist() {
+		this.creadoEn = new Date();
+	}
 	
 	
 	public Long getId() {

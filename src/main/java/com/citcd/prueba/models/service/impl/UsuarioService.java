@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.citcd.prueba.models.dao.IUsuarioDao;
 import com.citcd.prueba.models.entity.Usuario;
@@ -17,26 +18,27 @@ public class UsuarioService implements IUsuarioService{
 	
 	
 	@Override
+	@Transactional(readOnly = true)
 	public List<Usuario> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Usuario>) usuarioDao.findAll() ;
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Usuario findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return usuarioDao.findById(id).orElse(null);
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public Usuario save(Usuario usuario) {
-		// TODO Auto-generated method stub
-		return null;
+		return usuarioDao.save(usuario);
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void deleteById(Long id) {
-		// TODO Auto-generated method stub
+		usuarioDao.deleteById(id);
 		
 	}
 

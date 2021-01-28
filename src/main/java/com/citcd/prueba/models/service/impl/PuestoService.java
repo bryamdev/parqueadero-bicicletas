@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.citcd.prueba.models.dao.IPuestoDao;
 import com.citcd.prueba.models.entity.Puesto;
@@ -17,26 +18,27 @@ public class PuestoService implements IPuestoService {
 	
 	
 	@Override
+	@Transactional(readOnly = true)
 	public List<Puesto> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Puesto>) puestoDao.findAll();
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Puesto findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return puestoDao.findById(id).orElse(null);
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public Puesto save(Puesto puesto) {
-		// TODO Auto-generated method stub
-		return null;
+		return puestoDao.save(puesto);
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void deleteById(Long id) {
-		// TODO Auto-generated method stub
+		puestoDao.deleteById(id);
 		
 	}
 

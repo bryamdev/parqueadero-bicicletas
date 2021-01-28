@@ -13,7 +13,7 @@ public class HomeController {
 	public String home() {
 		
 		System.out.println("Si entró al handler");
-		return "templates/index.html";
+		return "index";
 	}
 	
 }
