@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.citcd.prueba.models.dao.IPuestoDao;
+import com.citcd.prueba.models.entity.Estado;
 import com.citcd.prueba.models.entity.Puesto;
+import com.citcd.prueba.models.service.IEstadoService;
 import com.citcd.prueba.models.service.IPuestoService;
 
 @Service
@@ -15,6 +17,9 @@ public class PuestoService implements IPuestoService {
 
 	@Autowired
 	private IPuestoDao puestoDao;
+	
+	@Autowired
+	private IEstadoService estadoService;
 	
 	
 	@Override
@@ -32,6 +37,9 @@ public class PuestoService implements IPuestoService {
 	@Override
 	@Transactional(readOnly = false)
 	public Puesto save(Puesto puesto) {
+		
+		validarPuesto(puesto);
+		
 		return puestoDao.save(puesto);
 	}
 
@@ -40,6 +48,27 @@ public class PuestoService implements IPuestoService {
 	public void deleteById(Long id) {
 		puestoDao.deleteById(id);
 		
+	}
+	
+	public void validarPuesto(Puesto puesto){
+		Puesto puestoOld = puestoDao.findByUbicacion(puesto.getUbicacion());
+		
+		if(puestoOld != null && puestoOld.getId() != puesto.getId()) {
+			throw new RuntimeException("Ya existe un puesto con ubicacion " + puesto.getUbicacion());
+		}
+	}
+	
+	@Override
+	public Puesto desocupar(Puesto puesto) {
+	
+		Estado estado = puesto.getEstado();
+		estado.setId(Integer.toUnsignedLong(1));
+		
+		puesto.setEstado(estado);
+		puesto.setHoraEntrada(null);
+		puesto.setUsuario(null);
+		
+		return save(puesto);
 	}
 
 }

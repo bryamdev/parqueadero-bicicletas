@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,19 +27,23 @@ public class Puesto implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotEmpty
 	private String ubicacion;
 	
 	@JoinColumn(name = "usuario_id")
 	@OneToOne(fetch = FetchType.EAGER)
-	private Usuario usuarioId;
+	private Usuario usuario;
 	
 	@JoinColumn(name="estado_id")
 	@OneToOne(fetch = FetchType.EAGER)
-	private Estado estadoId;
+	private Estado estado;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	private Date horaEntrada;
+	
+	
+	private String observacion;
 
 	
 	public Long getId() {
@@ -57,20 +62,20 @@ public class Puesto implements Serializable{
 		this.ubicacion = ubicacion;
 	}
 
-	public Usuario getUserId() {
-		return usuarioId;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setUserId(Usuario userId) {
-		this.usuarioId = userId;
+	public void setUsuario(Usuario userId) {
+		this.usuario = userId;
 	}
 
-	public Estado getEstadoId() {
-		return estadoId;
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setEstadoId(Estado estadoId) {
-		this.estadoId = estadoId;
+	public void setEstado(Estado estadoId) {
+		this.estado = estadoId;
 	}
 
 	public Date getHoraEntrada() {
@@ -79,6 +84,14 @@ public class Puesto implements Serializable{
 
 	public void setHoraEntrada(Date horaEntrada) {
 		this.horaEntrada = horaEntrada;
+	}
+	
+	public String getObservacion() {
+		return observacion;
+	}
+
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
 	}
 	
 	

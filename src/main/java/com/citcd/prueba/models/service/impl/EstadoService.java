@@ -28,5 +28,21 @@ public class EstadoService implements IEstadoService{
 	public Estado findByID(Long id) {
 		return estadoDao.findById(id).orElse(null);
 	}
+	
+	@Override
+	public Estado cambiarEstado(Estado estado) {
+		
+		if(estado.getId() == 1) {
+			estado.setId(2L);
+			estado.setNombre("Ocupado");
+		}
+		
+		if(estado.getId() == 2) {
+			estado.setId(1L);
+			estado.setNombre("Libre");
+		}
+		
+		return estado;
+	}
 
 }

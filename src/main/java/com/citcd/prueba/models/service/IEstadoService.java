@@ -9,5 +9,7 @@ public interface IEstadoService {
 	 
 	public Estado findByID(Long id);
 	
+	public Estado cambiarEstado(Estado estado);
+	
 
 }

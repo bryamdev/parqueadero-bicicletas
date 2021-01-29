@@ -12,6 +12,8 @@ public interface IPuestoService {
 	public Puesto save(Puesto puesto);
 	
 	public void deleteById(Long id);
+	
+	public Puesto desocupar(Puesto puesto);
 		
 	
 }
